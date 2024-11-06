@@ -11,7 +11,7 @@ PASSWORD = "mirando las estrellas me acordé de ti"
 
 clave = PASSWORD.split()
 # Ubicación
-lat, lon = 40.404081, 0.065633  # Zielo de levante
+lat, lon = 39.56939, 2.65024  # Zielo de levante
 
 # Fecha y hora objetivo (14 de noviembre a las 00:00)
 target_date = datetime(2024, 11, 14, 0, 0, 0)
@@ -20,7 +20,7 @@ target_date = datetime(2024, 11, 14, 0, 0, 0)
 
 pistas = ['Inicio', "Cuenta", "MLEMADT", "..."]
 
-cant = 0.00
+cant = 1.41
 
 pis1 = False
 
@@ -64,6 +64,14 @@ def main():
         with cent_co:
             st.image('luna 22% buena.png', caption= '22%')
         st.title('')
+
+        cara1, cara2 = st.columns(2)
+
+        with cara1:
+                    # Muestra la imagen difuminada
+            st.image(load_and_blur_image('2.png', blur_radius=156), use_column_width=True)
+        with cara2:
+            st.image(load_and_blur_image('3.png', blur_radius=156), use_column_width=True)
         
         while True:
             now = datetime.now()
@@ -153,7 +161,8 @@ def main():
         st.markdown("<div class='header'>Saldo</div>", unsafe_allow_html=True)
 
         # Mostrar el nombre del titular y el saldo
-        st.markdown("<div class='balance-container'>SARA </div>", unsafe_allow_html=True)
+        st.markdown("<div class='balance-container'>SARA RIPOLL</div>", unsafe_allow_html=True)
+        st.markdown('---')
         st.markdown(f"<div class='amount'>{cant} €</div>", unsafe_allow_html=True)
         st.markdown('---')
                 
@@ -166,43 +175,6 @@ def main():
 
     if selected == pistas[2]:
         
-        map_data = pd.DataFrame({"lat": [lat], "lon": [lon]})
-        st.pydeck_chart(pdk.Deck(
-            map_style="mapbox://styles/mapbox/satellite-streets-v11",  # Mapa satélite con etiquetas
-            initial_view_state=pdk.ViewState(
-                latitude=lat,
-                longitude=lon,
-                zoom=8,
-                pitch=0,
-            ),
-            layers=[
-                pdk.Layer(
-                    "ScatterplotLayer",
-                    data=map_data,
-                    get_position="[lon, lat]",
-                    get_color="[255, 0, 0, 200]",
-                    get_radius=600,
-                ),
-                pdk.Layer(
-                    "IconLayer",
-                    data=map_data,
-                    get_icon="pin",
-                    get_size=4,
-                    get_position=["lon", "lat"],
-                    pickable=True,
-                    icon_atlas="https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png",
-                    icon_mapping={
-                        "pin": {
-                            "x": 0,
-                            "y": 0,
-                            "width": 128,
-                            "height": 128,
-                            "anchorY": 128,
-                        }
-                    },
-                )
-            ],
-        ))
         m= st.text_input('M')
         l= st.text_input('L')
         e= st.text_input('E')
@@ -213,13 +185,60 @@ def main():
 
         if st.button('ingresar'):
             if m == clave[0] and l == clave[1] and e == clave[2] and me == clave[3] and a == clave[4] and d == clave[5] and t == clave[6]:
-                cara1, cara2 = st.columns(2)
+                # cara1, cara2 = st.columns(2)
 
-                with cara1:
-                    # Muestra la imagen difuminada
-                    st.image(load_and_blur_image('2.png', blur_radius=150), use_column_width=True)
-                with cara2:
-                    st.image(load_and_blur_image('3.png', blur_radius=150), use_column_width=True)
+                # with cara1:
+                #     # Muestra la imagen difuminada
+                #     st.image(load_and_blur_image('2.png', blur_radius=150), use_column_width=True)
+                # with cara2:
+                #     st.image(load_and_blur_image('3.png', blur_radius=150), use_column_width=True)
+                left_co, cent,last_co = st.columns(3)
+                with cent:
+                    st.image(load_and_blur_image('qr.png', blur_radius=0))             
+                
+                left_co, cen,last_co = st.columns(3)
+                with cen:
+                    st.subheader("fbdm'h nhsfjaz")
+                map_data = pd.DataFrame({"lat": [lat], "lon": [lon]})
+                st.pydeck_chart(pdk.Deck(
+                    map_style="mapbox://styles/mapbox/satellite-streets-v11",  # Mapa satélite con etiquetas
+                    initial_view_state=pdk.ViewState(
+                        latitude=lat,
+                        longitude=lon,
+                        zoom=9,
+                        pitch=0,
+                    ),
+                    layers=[
+                        pdk.Layer(
+                            "ScatterplotLayer",
+                            data=map_data,
+                            get_position="[lon, lat]",
+                            get_color="[0, 0, 0, 0]",
+                            get_radius=600,
+                        ),
+                        pdk.Layer(
+                            "IconLayer",
+                            data=map_data,
+                            get_icon="pin",
+                            get_size=4,
+                            get_position=["lon", "lat"],
+                            pickable=True,
+                            icon_atlas="https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png",
+                            icon_mapping={
+                                "pin": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "width": 128,
+                                    "height": 128,
+                                    "anchorY": 128,
+                                }
+                            },
+                        )
+                    ],
+                ))
+                left_co, ce,last_co = st.columns(3)
+                with ce:
+                    st.markdown('Dónde todo empieza')
 
     if selected == pistas[3]:
         st.title('??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????')
