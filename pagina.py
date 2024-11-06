@@ -153,7 +153,7 @@ def main():
         st.markdown("<div class='header'>Saldo</div>", unsafe_allow_html=True)
 
         # Mostrar el nombre del titular y el saldo
-        st.markdown("<div class='balance-container'>SARA RIPOLL</div>", unsafe_allow_html=True)
+        st.markdown("<div class='balance-container'>SARA </div>", unsafe_allow_html=True)
         st.markdown(f"<div class='amount'>{cant} €</div>", unsafe_allow_html=True)
         st.markdown('---')
                 
