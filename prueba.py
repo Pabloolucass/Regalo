@@ -5,6 +5,7 @@ id_cheque = '76696e696c6f'
 beneficiario = 'sara ripoll moreno'
 dinero = 40
 usado = False
+pago_hecho = False
 
 movimientos = {
     'Vuelo Valencia_Mallorca - 04/10/2024': -15.00,
