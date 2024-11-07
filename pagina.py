@@ -5,6 +5,7 @@ from datetime import datetime
 import pandas as pd
 import pydeck as pdk
 from PIL import ImageFilter, Image
+import prueba
 
 # Contraseña de acceso
 PASSWORD = "mirando las estrellas me acordé de ti"
@@ -14,28 +15,20 @@ clave = PASSWORD.split()
 lat, lon = 39.56939, 2.65024  # Zielo de levante
 
 # Fecha y hora objetivo (14 de noviembre a las 00:00)
-target_date = datetime(2024, 11, 14, 0, 0, 0)
+target_date = datetime(2024, 11, 14, 21, 30, 0)
 
 # image, col_menu = st.columns((0.2,0.8))
 
-pistas = ['Inicio', "Cuenta", "MLEMADT", "..."]
+pistas = ['Inicio', "M.L.E.M.A.D.T. BANK",'PHOTO RESTORATION', "MLEMADT", '...']
 
-cant = 1.41
-
-pis1 = False
-
-movimientos = {
-    'Vuelo Valencia_Mallorca': -15.00,
-    'Autobús Alicante_Granada - 02/07/2024': -3.72,
-    'Hotel Zielo de Levante - 05/02/2024': -40.00,
-    'Ryanair Valencia_Viena - 15/12/2023': -98.00,
-    'Renfe Alicante_Valencia - 05/09/2023': -20.00,
-    'Amanecer - 15/07/2023': -0.0,
-    'Fuegos artificiales - 25/07/2023' : -5.5,
-    'Autobús hogueras - 24/06/2023': -1.45,
-    'Copity PAU - 08/06/2023': -6.00,
-    'Ruta del bacalao - 29/12/2022': -5.5
+tienda = {
+    'Enfocar imagen 50%': 40,
+    'Enfocar imagen 100%': 70,
+    'Restaurar foto antigua': 100,
+    'Retoque fotográfico': 65,
+    'Pasar imagen a color': 46
 }
+
 
 #difuminar imagen
 def load_and_blur_image(image_path, blur_radius=5):
@@ -48,7 +41,7 @@ def main():
         selected = option_menu(
             menu_title="",
             options= pistas,
-            icons=['tic',"money", "tic", "tic"],
+            icons=['tic',"money", "tic", "tic", 'tic'],
             menu_icon= 'tic',
             default_index=0
         )
@@ -69,9 +62,9 @@ def main():
 
         with cara1:
                     # Muestra la imagen difuminada
-            st.image(load_and_blur_image('foto granada.png', blur_radius=156), use_column_width=True)
+            st.image(load_and_blur_image('foto granada.png', blur_radius=prueba.blur1), use_column_width=True)
         with cara2:
-            st.image(load_and_blur_image('qr bonito.png', blur_radius=156), use_column_width=True)
+            st.image(load_and_blur_image('qr bonito.png', blur_radius=prueba.blur2), use_column_width=True)
         
         while True:
             now = datetime.now()
@@ -120,6 +113,7 @@ def main():
                 break
     
     if selected == pistas[1]:
+        
         # CSS para estilo personalizado
         st.markdown(
         """
@@ -156,24 +150,53 @@ def main():
         """,
         unsafe_allow_html=True
         )
+        st.image('banco.png') 
+        page = st.radio("Selecciona una opción:", ['Inicio', "Saldo y movimientos", "Reclamar cheque"])
 
-        # Mostrar la cabecera
-        st.markdown("<div class='header'>Saldo</div>", unsafe_allow_html=True)
+        if page == "Reclamar cheque":
+            st.subheader("Formulario para reclamar cheque")
 
-        # Mostrar el nombre del titular y el saldo
-        st.markdown("<div class='balance-container'>SARA RIPOLL</div>", unsafe_allow_html=True)
-        st.markdown('---')
-        st.markdown(f"<div class='amount'>{cant} €</div>", unsafe_allow_html=True)
-        st.markdown('---')
-                
-        st.markdown("<div class='header'>Movimientos</div>", unsafe_allow_html=True)
-        st.markdown('---')
-        for mov, dinero in movimientos.items():
-            st.subheader(mov)
-            st.subheader(f'{dinero} €')
+            # Ingresar ID y nombre de la persona
+            id_cheque = st.text_input("Ingresa el ID del cheque")
+            nombre_persona = st.text_input("Ingresa el nombre del beneficiario (Nombre y apellidos)").lower()
+
+            if st.button("Enviar reclamo"):
+                if (id_cheque == prueba.id_cheque) and (nombre_persona == prueba.beneficiario) and(prueba.usado == False):
+                    st.success(f"Cheque de {prueba.dinero}€ reclamado con éxito por {nombre_persona} (ID: {id_cheque}).")
+                    prueba.cant += prueba.dinero
+                    prueba.movimientos['Cheque COM - 07/11/2024'] =  prueba.dinero
+                    prueba.usado = True
+                else:
+                    st.error("Por favor, revisa que la información sea correcta.")
+        elif page == 'Inicio':
+            pass
+            
+        elif page == 'Saldo y movimientos':
+            # Mostrar la cabecera
+            st.markdown("<div class='header'>Saldo</div>", unsafe_allow_html=True)
+
+            # Mostrar el nombre del titular y el saldo
+            st.markdown("<div class='balance-container'>SARA RIPOLL</div>", unsafe_allow_html=True)
             st.markdown('---')
+            st.markdown(f"<div class='amount'>{prueba.cant:.2f} €</div>", unsafe_allow_html=True)
+            st.markdown('---')
+                    
+            st.markdown("<div class='header'>Movimientos</div>", unsafe_allow_html=True)
+            st.markdown('---')
+            if prueba.pago_hecho:
+                st.subheader('Enfoque imagen PHOTO RESTORATION - 07/11/2024')
+                st.subheader('-40.0 €')
+                st.markdown('---')
+            if prueba.usado:
+                st.subheader('Cheque COM - 07/11/2024')
+                st.subheader('+40.0 €')
+                st.markdown('---')
+            for mov, dinero in prueba.movimientos.items():
+                st.subheader(mov)
+                st.subheader(f'{dinero} €')
+                st.markdown('---')
 
-    if selected == pistas[2]:
+    if selected == pistas[3]:
         
         m= st.text_input('M')
         l= st.text_input('L')
@@ -189,15 +212,14 @@ def main():
 
                 # with cara1:
                 #     # Muestra la imagen difuminada
-                #     st.image(load_and_blur_image('foto granada.png', blur_radius=150), use_column_width=True)
+                #     st.image(load_and_blur_image('2.png', blur_radius=150), use_column_width=True)
                 # with cara2:
-                #     st.image(load_and_blur_image('qr bonito.png', blur_radius=150), use_column_width=True)
+                #     st.image(load_and_blur_image('3.png', blur_radius=150), use_column_width=True)
                 left_co, cent,last_co = st.columns(3)
                 with cent:
                     st.image(load_and_blur_image('qr.png', blur_radius=0))             
                 
-                left_co, cen,last_co = st.columns(3)
-                with cen:
+                with cent:
                     st.subheader("fbdm'h nhsfjaz")
                 map_data = pd.DataFrame({"lat": [lat], "lon": [lon]})
                 st.pydeck_chart(pdk.Deck(
@@ -236,11 +258,85 @@ def main():
                         )
                     ],
                 ))
-                left_co, ce,last_co = st.columns(3)
-                with ce:
-                    st.markdown('Donde todo empieza')
+                with cent:
+                    st.markdown('Dónde todo empieza')
 
-    if selected == pistas[3]:
+    if selected == pistas[2]:
+        left_co, middle,last_co = st.columns(3)
+        with left_co:
+            st.image('rest fotos logo.png', width= 580,)
+        st.markdown('---')
+
+        st.markdown(f"<div class='subtitulo'>Servicios</div>", unsafe_allow_html=True)
+
+        for producto, precio in tienda.items():
+            
+            st.markdown('---')
+
+            st.markdown(
+            """
+            <style>
+                .subtitulo {
+                    text-align: center;
+                    font-size: 34px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                    margin-right: 175px;
+                }
+                .header {
+                    text-align: center;
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                    margin-right: 175px;
+                }
+                hr {
+                    border: 0;
+                    height: 5px; /* Grosor de la línea */
+                    background-color: #000; /* Color de la línea */
+                    width: 78%; /* Ocupa todo el ancho */
+                }
+            </style>
+            """, unsafe_allow_html= True)
+            st.markdown(f"<div class='header'>{producto}</div>", unsafe_allow_html=True)
+
+            left_c, c,last_co = st.columns(3)
+            with c:
+                if st.button(f'💳 {precio} €'):
+                    if prueba.cant >= precio:
+                        st.success('Se ha realizado el pago correctamente')
+                        prueba.cant -= precio
+                        prueba.blur2 = 30
+                        prueba.blur1 = 90
+                        prueba.pago_hecho = True
+
+                    else:
+                        st.error('No tienes dinero suficiente')
+        st.title('')
+        s1,s2,s3,s4,s5, s6, s7, s8, s9 = st.columns(9)
+
+        with s1:
+            st.button('Pag 1')
+        with s2:
+            st.button('Pag 2')
+        with s3:
+            st.button('Pag 3')
+        with s4:
+            st.subheader('........')
+        with s5:
+            st.subheader('........')
+        with s6:
+            st.subheader('.......')
+        with s7:
+            st.button('Pag 9')
+
+
+    if selected == pistas[4]:
+        
+        pass
+            
+
+    if selected == pistas[4]:
         st.title('??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????')
 
 # def login():
