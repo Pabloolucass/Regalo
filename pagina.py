@@ -69,9 +69,9 @@ def main():
 
         with cara1:
                     # Muestra la imagen difuminada
-            st.image(load_and_blur_image('2.png', blur_radius=156), use_column_width=True)
+            st.image(load_and_blur_image('foto granada.png', blur_radius=156), use_column_width=True)
         with cara2:
-            st.image(load_and_blur_image('3.png', blur_radius=156), use_column_width=True)
+            st.image(load_and_blur_image('qr bonito.png', blur_radius=156), use_column_width=True)
         
         while True:
             now = datetime.now()
