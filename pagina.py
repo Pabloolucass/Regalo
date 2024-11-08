@@ -183,14 +183,6 @@ def main():
                     
             st.markdown("<div class='header'>Movimientos</div>", unsafe_allow_html=True)
             st.markdown('---')
-            if prueba.pago_hecho:
-                st.subheader('Enfoque imagen PHOTO RESTORATION - 07/11/2024')
-                st.subheader('-40.0 €')
-                st.markdown('---')
-            if prueba.usado:
-                st.subheader('Cheque COM - 07/11/2024')
-                st.subheader('+40.0 €')
-                st.markdown('---')
             for mov, dinero in prueba.movimientos.items():
                 st.subheader(mov)
                 st.subheader(f'{dinero} €')
