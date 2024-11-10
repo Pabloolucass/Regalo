@@ -55,7 +55,7 @@ def main():
 
         left_co, cent_co,last_co = st.columns(3)
         with cent_co:
-            st.image('luna 53% buena.png', caption= '53%')
+            st.image('luna 63% buena.png', caption= '64%')
         st.title('')
 
         cara1, cara2 = st.columns(2)
