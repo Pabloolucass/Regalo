@@ -33,3 +33,5 @@ movimientos = {
     'Copity PAU - 08/06/2023': -6.00,
     'Ruta del bacalao - 29/12/2022': -5.5
 }
+
+count = 0
