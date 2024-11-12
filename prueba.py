@@ -1,10 +1,23 @@
 cant = 1.41
-blur1 = 90
-blur2 = 30
+blur1 = 156
+blur2 = 156
 id_cheque = '76696e696c6f'
 beneficiario = 'sara ripoll moreno'
 dinero = 40
+usado = True
+email_sender = 'mlemadtexpress@gmail.com'
+password = 'mltp jfbx rxwy nlkg'
+ID = '74652071756965726f'
 
+
+shipping_history = [
+                        # {"date": "14/11/2024", "time": "21:00", "status": "Paquete en destino", "location": "ALICANTE, ESPAÑA", "icon": "✅", "image": "granada.jpg"},
+                        # {"date": "14/11/2024", "time": "17:00", "status": "Paquete próximo a destino", "location": "GUARDAMAR, ESPAÑA", "icon": "🚚", "image": "guardamar.jpg"},
+                        # {"date": "13/11/2024", "time": "21:00", "status": "Paquete en tránsito hacia destino", "location": "MURCIA, ESPAÑA", "icon": "🚚", "image": "granada.jpg"},
+                        # {"date": "13/11/2024", "time": "15:00", "status": "Paquete llegado a territorio nacional", "location": "GRANADA, ESPAÑA", "icon": "🚚", "image": "granada.jpg"},
+                        # {"date": "12/11/2024", "time": "21:00", "status": "Pedido enviado a destino", "location": "VIENA, AUSTRIA", "icon": "🚚", "image": "viena 4.jpg"},                        
+                        {"date": "12/11/2024", "time": "19:00", "status": "Preparando pedido para el envío", "location": "VIENA, AUSTRIA", "icon": "📦", "image": "viena 3.png"},
+                    ]
 
 movimientos = {
     'Enfoque imagen PHOTO RESTORATION - 07/11/2024': -40.00,
