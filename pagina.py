@@ -25,7 +25,7 @@ target_date = datetime(2024, 11, 14, 21, 30, 0)
 
 # image, col_menu = st.columns((0.2,0.8))
 
-pistas = ['INICIO',"MLEMADT", "M.L.E.M.A.D.T. BANK",'MLEMADT EXPRESS','PHOTO RESTORATION', 'ESTADO']
+pistas = ['INICIO',"MLEMADT", "M.L.E.M.A.D.T. BANK",'MLEMADT EXPRESS','PHOTO RESTORATION', 'REGALO']
 
 tienda = {
     'Enfocar imagen 50%': 40,
