@@ -1,6 +1,6 @@
 cant = 1.41
-blur1 = 156
-blur2 = 156
+blur1 = 90
+blur2 = 35
 id_cheque = '76696e696c6f'
 beneficiario = 'sara ripoll moreno'
 dinero = 40
