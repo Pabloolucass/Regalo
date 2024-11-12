@@ -378,9 +378,9 @@ def main():
                             <div class="progress-circle completed"></div>
                             Preparando Pedido
                         </div>
-                        <div class="progress-line "></div>
+                        <div class="progress-line completed"></div>
                         <div class="progress-step">
-                            <div class="progress-circle "></div>
+                            <div class="progress-circle completed"></div>
                             En Tránsito
                         </div>
                         <div class="progress-line"></div> <!-- Not completed -->
