@@ -20,7 +20,7 @@ clave = PASSWORD.split()
 lat, lon = 39.56939, 2.65024  # Zielo de levante
 
 # Fecha y hora objetivo (14 de noviembre a las 00:00)
-target_date = datetime(2024, 11, 13, 21, 30, 0)
+target_date = datetime(2024, 11, 13, 21, 35, 0)
 
 # image, col_menu = st.columns((0.2,0.8))
 
