@@ -8,7 +8,6 @@ from PIL import ImageFilter, Image
 import prueba
 import smtplib
 from email.mime.multipart import MIMEMultipart
-
 from email.mime.text import MIMEText
 import ssl
 import os
@@ -21,11 +20,11 @@ clave = PASSWORD.split()
 lat, lon = 39.56939, 2.65024  # Zielo de levante
 
 # Fecha y hora objetivo (14 de noviembre a las 00:00)
-target_date = datetime(2024, 11, 13, 21, 30, 0)
+target_date = datetime(2024, 11, 13, 22, 30, 0)
 
 # image, col_menu = st.columns((0.2,0.8))
 
-pistas = ['INICIO',"MLEMADT", "M.L.E.M.A.D.T. BANK",'MLEMADT EXPRESS','PHOTO RESTORATION', 'REGALO']
+pistas = ['INICIO',"MLEMADT", "M.L.E.M.A.D.T. BANK",'MLEMADT EXPRESS','PHOTO RESTORATION', 'ESTADO']
 
 tienda = {
     'Enfocar imagen 50%': 40,
@@ -55,13 +54,13 @@ def send_mail(email_sender, password, email_receiver, subject, body, attachment_
     <html>
     <body>
         <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 600px; margin: auto;">
-            <h2 style="color: #5F9EA0; text-align: center;">¡Tu regalo está en camino!</h2>
+            <h2 style="color: #5F9EA0; text-align: center;">¡Tu regalo ya está en Alicante!</h2>
             <p>Hola,</p>
-            <p>¡Enhorabuena, Sara Ripoll Moreno! Estamos emocionados de informarte que tu regalo ha sido terminado con éxito, y ahora procederemos con el envío del mismo.</p>
-            <p>Tu número de seguimiento es: <strong>74652071756965726f</strong></p>
-            <p>Para rastrear el estado de tu pedido, simplemente ingresa este número en el sitio web de seguimiento de MLEMADT Express.</p>
+            <p>El pedido ya se encuentra en Alicante.</p>
+            <p>Solo falta que confirmes que estás disponible para recibir el pedido.</p>
+            <p>Esto se hace introduciendo la foto que aparece en la página principal en el apartado de 'Confirmación entrega' de MLEMADT Express.</p>
             <p>Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.</p>
-            <p>Disfruta de tu regalo y esperamos que te traiga mucha alegría.</p>
+            <p>Cuando lo confirmes este será enviado a tu casa.</p>
             <p>Saludos cordiales,</p>
             <p>Departamento de envíos</p>
             <br>
@@ -98,6 +97,10 @@ def load_and_blur_image(image_path, blur_radius=5):
     blurred_image = image.filter(ImageFilter.GaussianBlur(radius=blur_radius))
     return blurred_image
 
+finished_image1 = 'foto granada.png'
+finished_image2 = 'qr bonito.png'
+finished_luna_image = 'luna llena.png' 
+
 def main():
     with st.sidebar:
         selected = option_menu(
@@ -115,19 +118,19 @@ def main():
         countdown_container = st.empty()
         st.subheader('')
 
-        left_co, cent_co,last_co = st.columns(3)
+        left_co, cent_co, last_co = st.columns(3)
         with cent_co:
-            st.image('luna 94% buena.png', caption= '94%')
+            luna_placeholder = st.image('luna 94% buena.png', caption='94%')  # Imagen de la luna inicial
         st.title('')
 
         cara1, cara2 = st.columns(2)
 
         with cara1:
-                    # Muestra la imagen difuminada
-            st.image(load_and_blur_image('foto granada.png', blur_radius=prueba.blur1), use_column_width=True)
+            # Muestra la imagen difuminada
+            image_placeholder1 = st.image(load_and_blur_image('foto granada.png', blur_radius=prueba.blur1), use_column_width=True)
         with cara2:
-            st.image(load_and_blur_image('qr bonito.png', blur_radius=prueba.blur2), use_column_width=True)
-        
+            image_placeholder2 = st.image(load_and_blur_image('qr bonito.png', blur_radius=prueba.blur2), use_column_width=True)
+
         while True:
             now = datetime.now()
             time_left = target_date - now
@@ -166,14 +169,30 @@ def main():
                     """,
                     unsafe_allow_html=True
                 )
-
                 time.sleep(1)
-
-
             else:
-                countdown_container.markdown("<h1 style='text-align: center; color: green;'>¡La cuenta regresiva ha terminado!</h1>", unsafe_allow_html=True)
+                countdown_container.markdown("<h1 style='text-align: center; color: green;'>100%</h1>", unsafe_allow_html=True)
+
+                # Eliminar las imágenes originales
+                image_placeholder1.empty()
+                image_placeholder2.empty()
+                luna_placeholder.empty()
+
+                # Cambiar las imágenes después de que la cuenta regresiva termine
+                with cara1:
+                    st.image(finished_image1, use_column_width=True)
+                with cara2:
+                    st.image(finished_image2, use_column_width=True)
+                with cent_co:
+                    st.image(finished_luna_image)
+
+                try:
+                    send_mail(prueba.email_sender, prueba.password, prueba.gmail, 'TU PEDIDO ESTÁ EN ALICANTE', '')
+                    st.success('Revisa tu correo electrónico')
+                except Exception as e:
+                    st.error(f"Ocurrió un error: {e}")
+
                 break
-    
 
     if selected == pistas[1]:
         
@@ -323,11 +342,12 @@ def main():
             st.title('')
             st.title('')
             st.image('MLEMADT Express.png', width= 650)
-            pestaña = st.radio("Selecciona una opción:", ['Inicio', "Seguimiento pedido"])
+            pestaña = st.radio("Selecciona una opción:", ['Inicio', "Seguimiento pedido", "Confirmar entrega"])
             
             if pestaña == 'Seguimiento pedido':
                 ID = st.text_input('Introduzca el ID de seguimiento')
                 if st.button('Ingresar') and (ID == prueba.ID):
+
                     st.write(f"**ID de seguimiento:** {ID}")
                     st.subheader('')
 
@@ -413,8 +433,26 @@ def main():
                         with col2:
                             st.subheader('')
                             st.image(event['image'], width=200)
-                else:
-                    pass
+
+            if pestaña == 'Confirmar entrega':
+                imagen_cargada = st.file_uploader('Sube tu código qr', type=["png", "jpg", "jpeg"])
+                if imagen_cargada is not None:
+                    imagen = Image.open(imagen_cargada)
+                    # Leer el QR
+                    if imagen == Image.open('foto granada.png'):
+                        if not prueba.cargado:
+                            loading_text = st.empty()  # Contenedor para el texto de carga
+                            for i in range(3):  # Puedes ajustar el número de repeticiones
+                                for dots in range(1, 4):  # Ciclo de puntos
+                                    loading_text.title(f'Escaneando foto {"." * dots}')
+                                    time.sleep(0.5)  # Ajusta el tiempo entre cada actualización
+                            loading_text.empty()
+                        prueba.cargado = True
+                        prueba.shipping_history.insert(0, prueba.new_entry)
+
+                        
+
+                        
 
     if selected == pistas[4]:
         left_co, middle,last_co = st.columns(3)
@@ -461,9 +499,9 @@ def main():
                     if prueba.cant >= precio:
                         st.success('Se ha realizado el pago correctamente')
                         prueba.cant -= precio
-                        prueba.blur2 = 30
-                        prueba.blur1 = 90
-                        prueba.pago_hecho = True
+                        prueba.blur2 = 0
+                        prueba.blur1 = 0
+                        prueba.done = True
 
                     else:
                         st.error('No tienes dinero suficiente')
