@@ -11,7 +11,7 @@ ID = '74652071756965726f'
 
 
 shipping_history = [
-                        # {"date": "14/11/2024", "time": "21:00", "status": "Paquete en destino", "location": "ALICANTE, ESPAÑA", "icon": "✅", "image": "granada.jpg"},
+                        # {"date": "14/11/2024", "time": "00:00", "status": "Paquete en destino", "location": "ALICANTE, ESPAÑA", "icon": "✅", "image": "alicante 2.JPG"},
                         {"date": "13/11/2024", "time": "18:26", "status": "Paquete próximo a destino", "location": "GUARDAMAR, ESPAÑA", "icon": "🚚", "image": "guardamar.JPG"},
                         {"date": "13/11/2024", "time": "16:11", "status": "Paquete en tránsito hacia destino", "location": "MURCIA, ESPAÑA", "icon": "🚚", "image": "murcia.JPG"},
                         {"date": "13/11/2024", "time": "12:21", "status": "Paquete llegado a territorio nacional", "location": "GRANADA, ESPAÑA", "icon": "🚚", "image": "granada.JPG"},
