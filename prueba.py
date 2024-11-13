@@ -19,6 +19,15 @@ shipping_history = [
                         {"date": "12/11/2024", "time": "20:55", "status": "Preparando pedido para el envío", "location": "VIENA, AUSTRIA", "icon": "📦", "image": "viena 3.png"},
                     ]
 
+new_entry = {
+    "date": "13/11/2024",
+    "time": "22:45",
+    "status": "Paquete en reparto",
+    "location": "ALICANTE, ESPAÑA",
+    "icon": "🚚",
+    "image": "alicante 1.JPG"
+}
+
 movimientos = {
     'Enfoque imagen PHOTO RESTORATION - 07/11/2024': -40.00,
     'Cheque COM - 07/11/2024': '+40.0',
