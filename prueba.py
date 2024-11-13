@@ -8,7 +8,7 @@ usado = True
 email_sender = 'mlemadtexpress@gmail.com'
 password = 'mltp jfbx rxwy nlkg'
 ID = '74652071756965726f'
-
+gmail = 'sararipoll@icloud.com'
 
 shipping_history = [
                         # {"date": "14/11/2024", "time": "00:00", "status": "Paquete en destino", "location": "ALICANTE, ESPAÑA", "icon": "✅", "image": "alicante 2.jpg"},
