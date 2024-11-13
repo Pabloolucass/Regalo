@@ -436,7 +436,7 @@ def main():
 
             if pestaña == 'Confirmar entrega':
                 imagen_cargada = st.file_uploader('Sube tu código qr', type=["png", "jpg", "jpeg"])
-                if imagen_cargada is not None:
+                if imagen_cargada is not None and st.button('Ingresar archivo'):
                     imagen = Image.open(imagen_cargada)
                     # Leer el QR
                     if imagen == Image.open('foto granada.png'):
