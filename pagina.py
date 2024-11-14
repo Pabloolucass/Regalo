@@ -403,14 +403,14 @@ def main():
                             <div class="progress-circle completed"></div>
                             En Tránsito
                         </div>
-                        <div class="progress-line"></div> <!-- Not completed -->
+                        <div class="progress-line completed"></div> <!-- Not completed -->
                         <div class="progress-step">
-                            <div class="progress-circle"></div> <!-- Not completed -->
+                            <div class="progress-circle completed"></div> <!-- Not completed -->
                             En Reparto
                         </div>
-                        <div class="progress-line"></div> <!-- Not completed -->
+                        <div class="progress-line completed"></div> <!-- Not completed -->
                         <div class="progress-step">
-                            <div class="progress-circle"></div> <!-- Not completed -->
+                            <div class="progress-circle completed"></div> <!-- Not completed -->
                             Entregado
                         </div>
                     </div>
