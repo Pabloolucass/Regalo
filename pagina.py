@@ -186,11 +186,11 @@ def main():
                 with cent_co:
                     st.image(finished_luna_image)
 
-                try:
-                    send_mail(prueba.email_sender, prueba.password, prueba.gmail, 'TU PEDIDO ESTÁ EN ALICANTE', '')
-                    st.success('Revisa tu correo electrónico')
-                except Exception as e:
-                    st.error(f"Ocurrió un error: {e}")
+                #try:
+                    #send_mail(prueba.email_sender, prueba.password, prueba.gmail, 'TU PEDIDO ESTÁ EN ALICANTE', '')
+                    #st.success('Revisa tu correo electrónico')
+                #except Exception as e:
+                    #st.error(f"Ocurrió un error: {e}")
 
                 break
 
@@ -448,7 +448,7 @@ def main():
                                     time.sleep(0.5)  # Ajusta el tiempo entre cada actualización
                             loading_text.empty()
                         prueba.cargado = True
-                        prueba.shipping_history.insert(0, prueba.new_entry)
+                        #prueba.shipping_history.insert(0, prueba.new_entry)
 
                         
 
