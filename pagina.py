@@ -115,7 +115,7 @@ def main():
         # #     luna_placeholder = st.image('fotos/luna_94%_buena.png', caption='94%')  # Imagen de la luna inicial
         # # st.title('')
 
-        # cara1, cara2 = st.columns(2)
+        cara1, cara2 = st.columns(2)
 
         with cara1:
             st.image('foto granada.png', caption='granada')
