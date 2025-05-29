@@ -113,13 +113,13 @@ def main():
         #     luna_placeholder = st.image('fotos/luna_94%_buena.png', caption='94%')  # Imagen de la luna inicial
         # st.title('')
 
-        cara1, cara2 = st.columns(2)
+        # cara1, cara2 = st.columns(2)
 
-        with cara1:
-            # Muestra la imagen difuminada
-            image_placeholder1 = st.image(load_and_blur_image('fotos/foto granada.png', blur_radius=prueba.blur1), use_column_width =True)
-        with cara2:
-            image_placeholder2 = st.image(load_and_blur_image('fotos/qr bonito.png', blur_radius=prueba.blur2), use_column_width =True)
+        # with cara1:
+        #     # Muestra la imagen difuminada
+        #     image_placeholder1 = st.image(load_and_blur_image('fotos/foto granada.png', blur_radius=prueba.blur1), use_column_width =True)
+        # with cara2:
+        #     image_placeholder2 = st.image(load_and_blur_image('fotos/qr bonito.png', blur_radius=prueba.blur2), use_column_width =True)
 
         while True:
             now = datetime.now()
