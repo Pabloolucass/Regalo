@@ -117,10 +117,10 @@ def main():
 
         # cara1, cara2 = st.columns(2)
 
-        # with cara1:
-        #     st.image('fotos/foto granada.png', caption='granada')
-        # with cara2:
-        #     st.image('fotos/qr bonito.png', caption='qr')
+        with cara1:
+            st.image('foto granada.png', caption='granada')
+        with cara2:
+            st.image('qr bonito.png', caption='qr')
         
         # with cara1:
         #     # Muestra la imagen difuminada
