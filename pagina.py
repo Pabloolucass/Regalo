@@ -455,7 +455,7 @@ def main():
     if selected == pistas[4]:
         left_co, middle_l, middle_r,last_co = st.columns(4)
         with middle_l:
-            st.image('fotos/rest fotos logo.png', width= 700,)
+            st.image('fotos/rest fotos logo.png', width= 500,)
         st.markdown('---')
 
         st.markdown(f"<div class='subtitulo'>Servicios</div>", unsafe_allow_html=True)
