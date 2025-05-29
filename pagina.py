@@ -578,7 +578,7 @@ def main():
     if selected == pistas[6]:
         oferta = st.text_input('Introduce el código de la oferta que quieres canjear')
         if oferta == 'mAsAJe':
-            send_mail(prueba.email_sender, prueba.password, 'luismanzanahd@gmail.com', 'Aquí está su vale para canjear hoy mismo', body=prueba.body_qr, attachment_path='fotos/vale_masaje_mejorado.png')
+            send_mail(prueba.email_sender, prueba.password, 'sararipoll@icloud.com', 'Aquí está su vale para canjear hoy mismo', body=prueba.body_qr, attachment_path='fotos/vale_masaje_mejorado.png')
             st.success('Revisa tu correo electrónico')
         
 
