@@ -163,10 +163,10 @@ def main():
             else:
                 countdown_container.markdown("<h1 style='text-align: center; color: green;'>100%</h1>", unsafe_allow_html=True)
 
-                # Eliminar las imágenes originales
-                image_placeholder1.empty()
-                image_placeholder2.empty()
-                luna_placeholder.empty()
+                # # Eliminar las imágenes originales
+                # image_placeholder1.empty()
+                # image_placeholder2.empty()
+                # luna_placeholder.empty()
 
                 # Cambiar las imágenes después de que la cuenta regresiva termine
                 with cara1:
