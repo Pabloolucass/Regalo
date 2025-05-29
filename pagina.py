@@ -9,8 +9,22 @@ import prueba
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email.mime.image import MIMEImage
+from email import encoders
 import ssl
 import os
+import importlib
+importlib.reload(prueba)
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    # Legacy Python that doesn't verify HTTPS certificates by default
+    pass
+else:
+    # Handle target environment that doesn't support HTTPS verification
+    ssl._create_default_https_context = _create_unverified_https_context
 
 # Contraseña de acceso
 PASSWORD = "mirando las estrellas me acordé de ti"
@@ -20,11 +34,11 @@ clave = PASSWORD.split()
 lat, lon = 39.56939, 2.65024  # Zielo de levante
 
 # Fecha y hora objetivo (14 de noviembre a las 00:00)
-target_date = datetime(2024, 11, 13, 21, 42, 0)
+target_date = datetime(2024, 11, 12, 22, 30, 0)
 
 # image, col_menu = st.columns((0.2,0.8))
 
-pistas = ['INICIO',"MLEMADT", "M.L.E.M.A.D.T. BANK",'MLEMADT EXPRESS','PHOTO RESTORATION', 'ESTADO']
+pistas = ['INICIO',"MLEMADT", "M.L.E.M.A.D.T. BANK",'MLEMADT EXPRESS','PHOTO RESTORATION', 'ESTADO', 'CANJEAR OFERTA']
 
 tienda = {
     'Enfocar imagen 50%': 40,
@@ -34,43 +48,16 @@ tienda = {
     'Pasar imagen a color': 46
 }
 
+
 def send_mail(email_sender, password, email_receiver, subject, body, attachment_path=None):
     """
     Envía un correo electrónico con la opción de adjuntar un archivo.
-
-    Parameters:
-    - email_sender: dirección de correo del remitente.
-    - password: contraseña del remitente.
-    - email_receiver: dirección de correo del receptor.
-    - subject: asunto del correo.
-    - body: cuerpo del mensaje del correo.
-    - attachment_path: ruta del archivo adjunto (opcional).
     """
     em = MIMEMultipart()
     em['From'] = email_sender
     em['To'] = email_receiver
     em['Subject'] = subject
-    html_body = f"""
-    <html>
-    <body>
-        <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 600px; margin: auto;">
-            <h2 style="color: #5F9EA0; text-align: center;">¡Tu regalo ya está en Alicante!</h2>
-            <p>Hola,</p>
-            <p>El pedido ya se encuentra en Alicante.</p>
-            <p>Solo falta que confirmes que estás disponible para recibir el pedido.</p>
-            <p>Esto se hace introduciendo la foto que aparece en la página principal en el apartado de 'Confirmación entrega' de MLEMADT Express.</p>
-            <p>Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.</p>
-            <p>Cuando lo confirmes este será enviado a tu casa.</p>
-            <p>Saludos cordiales,</p>
-            <p>Departamento de envíos</p>
-            <br>
-            <p><strong>MLEMADT Express</strong></p>
-            <p></p>
-            <p><a href="https://mlemadt.streamlit.app" target="_blank">mlemadt.streamlit.app</a></p>
-        </div>
-    </body>
-    </html>
-    """
+    html_body = body
 
     # Añadir el cuerpo HTML al mensaje
     em.attach(MIMEText(html_body, 'html'))
@@ -78,12 +65,15 @@ def send_mail(email_sender, password, email_receiver, subject, body, attachment_
     # Adjuntar archivo si se proporciona la ruta
     if attachment_path and os.path.isfile(attachment_path):
         with open(attachment_path, 'rb') as file:
-            file_data = file.read()
-            file_name = os.path.basename(attachment_path)
-            em.add_attachment(file_data, maintype='application', subtype='octet-stream', filename=file_name)
+            img_data = file.read()
+            image = MIMEImage(img_data, _subtype='png')
+            image.add_header('Content-ID', '<myimage>')
+            image.add_header('Content-Disposition', 'inline', filename=os.path.basename(attachment_path))
+            em.attach(image)
+
 
     # Establecer contexto SSL para la conexión segura
-    context = ssl.create_default_context()
+    context = ssl._create_unverified_context()
 
     # Enviar el correo
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
@@ -97,16 +87,16 @@ def load_and_blur_image(image_path, blur_radius=5):
     blurred_image = image.filter(ImageFilter.GaussianBlur(radius=blur_radius))
     return blurred_image
 
-finished_image1 = 'foto granada.png'
-finished_image2 = 'qr bonito.png'
-finished_luna_image = 'luna llena.png' 
+finished_image1 = 'fotos/foto granada.png'
+finished_image2 = 'fotos/qr bonito.png'
+finished_luna_image = 'fotos/luna llena.png' 
 
 def main():
     with st.sidebar:
         selected = option_menu(
             menu_title="",
             options= pistas,
-            icons=['tic',"money", "tic", "tic", 'tic', 'tic'],
+            icons=['tic',"money", "tic", "tic", 'tic', 'tic', 'tic'],
             menu_icon= 'tic',
             default_index=0
         )
@@ -120,16 +110,16 @@ def main():
 
         left_co, cent_co, last_co = st.columns(3)
         with cent_co:
-            luna_placeholder = st.image('luna 94% buena.png', caption='94%')  # Imagen de la luna inicial
+            luna_placeholder = st.image('fotos/luna 94% buena.png', caption='94%')  # Imagen de la luna inicial
         st.title('')
 
         cara1, cara2 = st.columns(2)
 
         with cara1:
             # Muestra la imagen difuminada
-            image_placeholder1 = st.image(load_and_blur_image('foto granada.png', blur_radius=prueba.blur1), use_column_width=True)
+            image_placeholder1 = st.image(load_and_blur_image('fotos/foto granada.png', blur_radius=prueba.blur1), use_column_width =True)
         with cara2:
-            image_placeholder2 = st.image(load_and_blur_image('qr bonito.png', blur_radius=prueba.blur2), use_column_width=True)
+            image_placeholder2 = st.image(load_and_blur_image('fotos/qr bonito.png', blur_radius=prueba.blur2), use_column_width =True)
 
         while True:
             now = datetime.now()
@@ -180,17 +170,17 @@ def main():
 
                 # Cambiar las imágenes después de que la cuenta regresiva termine
                 with cara1:
-                    st.image(finished_image1, use_column_width=True)
+                    st.image(finished_image1, use_column_width =True)
                 with cara2:
-                    st.image(finished_image2, use_column_width=True)
+                    st.image(finished_image2, use_column_width =True)
                 with cent_co:
                     st.image(finished_luna_image)
 
-                #try:
-                    #send_mail(prueba.email_sender, prueba.password, prueba.gmail, 'TU PEDIDO ESTÁ EN ALICANTE', '')
-                    #st.success('Revisa tu correo electrónico')
-                #except Exception as e:
-                    #st.error(f"Ocurrió un error: {e}")
+                # try:
+                #     send_mail(prueba.email_sender, prueba.password, 'pableritas2005@gmail.com', 'TU PEDIDO ESTÁ EN ALICANTE', '')
+                #     st.success('Revisa tu correo electrónico')
+                # except Exception as e:
+                #     st.error(f"Ocurrió un error: {e}")
 
                 break
 
@@ -215,7 +205,7 @@ def main():
                 #     st.image(load_and_blur_image('3.png', blur_radius=150), use_column_width=True)
                 left_co, cent,last_co = st.columns(3)
                 with cent:
-                    st.image(load_and_blur_image('qr.png', blur_radius=0))             
+                    st.image(load_and_blur_image('fotos/qr.png', blur_radius=0))             
                 
                 with cent:
                     st.subheader("fbdm'h nhsfjaz")
@@ -298,7 +288,7 @@ def main():
         """,
         unsafe_allow_html=True
         )
-        st.image('banco.png') 
+        st.image('fotos/banco.png') 
         page = st.radio("Selecciona una opción:", ['Inicio', "Saldo y movimientos", "Reclamar cheque"])
 
         if page == "Reclamar cheque":
@@ -341,7 +331,7 @@ def main():
     if selected == pistas[3]:
             st.title('')
             st.title('')
-            st.image('MLEMADT Express.png', width= 650)
+            st.image('fotos/MLEMADT Express.png', width= 650)
             pestaña = st.radio("Selecciona una opción:", ['Inicio', "Seguimiento pedido", "Confirmar entrega"])
             
             if pestaña == 'Seguimiento pedido':
@@ -403,14 +393,14 @@ def main():
                             <div class="progress-circle completed"></div>
                             En Tránsito
                         </div>
-                        <div class="progress-line completed"></div> <!-- Not completed -->
+                        <div class="progress-line"></div> <!-- Not completed -->
                         <div class="progress-step">
-                            <div class="progress-circle completed"></div> <!-- Not completed -->
+                            <div class="progress-circle"></div> <!-- Not completed -->
                             En Reparto
                         </div>
-                        <div class="progress-line completed"></div> <!-- Not completed -->
+                        <div class="progress-line"></div> <!-- Not completed -->
                         <div class="progress-step">
-                            <div class="progress-circle completed"></div> <!-- Not completed -->
+                            <div class="progress-circle"></div> <!-- Not completed -->
                             Entregado
                         </div>
                     </div>
@@ -436,10 +426,10 @@ def main():
 
             if pestaña == 'Confirmar entrega':
                 imagen_cargada = st.file_uploader('Sube tu código qr', type=["png", "jpg", "jpeg"])
-                if imagen_cargada is not None and st.button('Ingresar archivo'):
+                if imagen_cargada is not None:
                     imagen = Image.open(imagen_cargada)
                     # Leer el QR
-                    if imagen == Image.open('foto granada.png'):
+                    if imagen == Image.open('fotos/foto granada.png'):
                         if not prueba.cargado:
                             loading_text = st.empty()  # Contenedor para el texto de carga
                             for i in range(3):  # Puedes ajustar el número de repeticiones
@@ -448,16 +438,17 @@ def main():
                                     time.sleep(0.5)  # Ajusta el tiempo entre cada actualización
                             loading_text.empty()
                         prueba.cargado = True
-                        #prueba.shipping_history.insert(0, prueba.new_entry)
+                        prueba.shipping_history.insert(0, prueba.new_entry)
+                        st.success('Revisa el seguimiento del pedido')
 
                         
 
                         
 
     if selected == pistas[4]:
-        left_co, middle,last_co = st.columns(3)
-        with left_co:
-            st.image('rest fotos logo.png', width= 580,)
+        left_co, middle_l, middle_r,last_co = st.columns(4)
+        with middle_l:
+            st.image('fotos/rest fotos logo.png', width= 700,)
         st.markdown('---')
 
         st.markdown(f"<div class='subtitulo'>Servicios</div>", unsafe_allow_html=True)
@@ -556,7 +547,7 @@ def main():
                     }
                 </style>
                 """, unsafe_allow_html= True)
-            st.image('regalo.png')
+            st.image('fotos/regalo.png')
             st.write("""
                 **ENHORABUENA, TU REGALO SE HA FINALIZADO CORRECTAMENTE!!!**  
                 YA SOLO FALTA UN ÚLTIMO PASO PARA QUE PUEDAS DISFRUTAR DE ÉL COMO TE MERECES.
@@ -576,6 +567,15 @@ def main():
             if st.button('Confirmar'):
                 send_mail(prueba.email_sender, prueba.password, mail, 'Tu regalo está en camino!!!', '')
                 st.success('Se te ha enviado un mail con toda la información necesaria para seguir el pedido.')
+
+    if selected == pistas[6]:
+        oferta = st.text_input('Introduce el código de la oferta que quieres canjear')
+        if oferta == 'mAsAJe':
+            send_mail(prueba.email_sender, prueba.password, 'luismanzanahd@gmail.com', 'Aquí está su vale para canjear hoy mismo', body=prueba.body_qr, attachment_path='fotos/vale_masaje_mejorado.png')
+            st.success('Revisa tu correo electrónico')
+        
+
+
 
 
 
