@@ -108,9 +108,9 @@ def main():
         # countdown_container = st.empty()
         # st.subheader('')
 
-        # left_co, cent_co, last_co = st.columns(3)
-        # with cent_co:
-        #     st.image('fotos/luna llena.png', caption= '100%')
+        left_co, cent_co, last_co = st.columns(3)
+        with cent_co:
+            st.image('luna llena.png', caption= '100%')
         # # with cent_co:
         # #     luna_placeholder = st.image('fotos/luna_94%_buena.png', caption='94%')  # Imagen de la luna inicial
         # # st.title('')
