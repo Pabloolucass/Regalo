@@ -109,72 +109,79 @@ def main():
         st.subheader('')
 
         left_co, cent_co, last_co = st.columns(3)
+        with cent_co:
+            st.image('fotos/luna llena.png', caption= '100%')
         # with cent_co:
         #     luna_placeholder = st.image('fotos/luna_94%_buena.png', caption='94%')  # Imagen de la luna inicial
         # st.title('')
 
         cara1, cara2 = st.columns(2)
 
+        with cara1:
+            st.image('fotos/foto granada.png', caption='granada')
+        with cara2:
+            st.image('fotos/qr bonito.png', caption='qr')
+        
         # with cara1:
         #     # Muestra la imagen difuminada
         #     image_placeholder1 = st.image(load_and_blur_image('fotos/foto granada.png', blur_radius=prueba.blur1), use_column_width =True)
         # with cara2:
         #     image_placeholder2 = st.image(load_and_blur_image('fotos/qr bonito.png', blur_radius=prueba.blur2), use_column_width =True)
 
-        while True:
-            now = datetime.now()
-            time_left = target_date - now
+        # while True:
+        #     now = datetime.now()
+        #     time_left = target_date - now
 
-            if time_left.total_seconds() > 0:
-                # Calcula días, horas, minutos y segundos restantes
-                days, seconds = divmod(time_left.total_seconds(), 86400)
-                hours, seconds = divmod(seconds, 3600)
-                minutes, seconds = divmod(seconds, 60)
+            # if time_left.total_seconds() > 0:
+            #     # Calcula días, horas, minutos y segundos restantes
+            #     days, seconds = divmod(time_left.total_seconds(), 86400)
+            #     hours, seconds = divmod(seconds, 3600)
+            #     minutes, seconds = divmod(seconds, 60)
 
-                # Muestra la cuenta regresiva con el formato y estilo deseados
-                countdown_container.markdown(
-                    f"""
-                    <div style='display: flex; justify-content: center; font-size: 80px; color: black;'>
-                        <div style='text-align: center; margin: 0 20px;'>
-                            <div>{int(days):02}</div>
-                            <small style='font-size: 24px;'>días</small>
-                        </div>
-                        <div>:</div>
-                        <div style='text-align: center; margin: 0 20px;'>
-                            <div>{int(hours):02}</div>
-                            <small style='font-size: 24px;'>horas</small>
-                        </div>
-                        <div>:</div>
-                        <div style='text-align: center; margin: 0 20px;'>
-                            <div>{int(minutes):02}</div>
-                            <small style='font-size: 24px;'>minutos</small>
-                        </div>
-                        <div>:</div>
-                        <div style='text-align: center; margin: 0 20px;'>
-                            <div>{int(seconds):02}</div>
-                            <small style='font-size: 24px;'>segundos</small>
-                        </div>
-                    </div>
-                    <h3 style='text-align: center;'>14 de noviembre de 2024</h3>
-                    """,
-                    unsafe_allow_html=True
-                )
-                time.sleep(1)
-            else:
-                countdown_container.markdown("<h1 style='text-align: center; color: green;'>100%</h1>", unsafe_allow_html=True)
+            #     # Muestra la cuenta regresiva con el formato y estilo deseados
+            #     countdown_container.markdown(
+            #         f"""
+            #         <div style='display: flex; justify-content: center; font-size: 80px; color: black;'>
+            #             <div style='text-align: center; margin: 0 20px;'>
+            #                 <div>{int(days):02}</div>
+            #                 <small style='font-size: 24px;'>días</small>
+            #             </div>
+            #             <div>:</div>
+            #             <div style='text-align: center; margin: 0 20px;'>
+            #                 <div>{int(hours):02}</div>
+            #                 <small style='font-size: 24px;'>horas</small>
+            #             </div>
+            #             <div>:</div>
+            #             <div style='text-align: center; margin: 0 20px;'>
+            #                 <div>{int(minutes):02}</div>
+            #                 <small style='font-size: 24px;'>minutos</small>
+            #             </div>
+            #             <div>:</div>
+            #             <div style='text-align: center; margin: 0 20px;'>
+            #                 <div>{int(seconds):02}</div>
+            #                 <small style='font-size: 24px;'>segundos</small>
+            #             </div>
+            #         </div>
+            #         <h3 style='text-align: center;'>14 de noviembre de 2024</h3>
+            #         """,
+            #         unsafe_allow_html=True
+            #     )
+            #     time.sleep(1)
+            # else:
+            #     countdown_container.markdown("<h1 style='text-align: center; color: green;'>100%</h1>", unsafe_allow_html=True)
 
                 # # Eliminar las imágenes originales
                 # image_placeholder1.empty()
                 # image_placeholder2.empty()
                 # luna_placeholder.empty()
 
-                # Cambiar las imágenes después de que la cuenta regresiva termine
-                with cara1:
-                    st.image(finished_image1, use_column_width =True)
-                with cara2:
-                    st.image(finished_image2, use_column_width =True)
-                with cent_co:
-                    st.image(finished_luna_image)
+                # # Cambiar las imágenes después de que la cuenta regresiva termine
+                # with cara1:
+                #     st.image(finished_image1, use_column_width =True)
+                # with cara2:
+                #     st.image(finished_image2, use_column_width =True)
+                # with cent_co:
+                #     st.image(finished_luna_image)
 
                 # try:
                 #     send_mail(prueba.email_sender, prueba.password, 'pableritas2005@gmail.com', 'TU PEDIDO ESTÁ EN ALICANTE', '')
@@ -182,7 +189,7 @@ def main():
                 # except Exception as e:
                 #     st.error(f"Ocurrió un error: {e}")
 
-                break
+                # break
 
     if selected == pistas[1]:
         
