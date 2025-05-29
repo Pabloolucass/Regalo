@@ -110,7 +110,7 @@ def main():
 
         left_co, cent_co, last_co = st.columns(3)
         with cent_co:
-            luna_placeholder = st.image('fotos/luna 94% buena.png', caption='94%')  # Imagen de la luna inicial
+            luna_placeholder = st.image('fotos/luna_94%_buena.png', caption='94%')  # Imagen de la luna inicial
         st.title('')
 
         cara1, cara2 = st.columns(2)
