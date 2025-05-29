@@ -105,22 +105,22 @@ def main():
         st.markdown("<h1 style='text-align: center;'>2005 (MLEMADT)</h1>", unsafe_allow_html=True)
 
         # Crear un contenedor para la cuenta regresiva
-        countdown_container = st.empty()
-        st.subheader('')
+        # countdown_container = st.empty()
+        # st.subheader('')
 
-        left_co, cent_co, last_co = st.columns(3)
-        with cent_co:
-            st.image('fotos/luna llena.png', caption= '100%')
+        # left_co, cent_co, last_co = st.columns(3)
         # with cent_co:
-        #     luna_placeholder = st.image('fotos/luna_94%_buena.png', caption='94%')  # Imagen de la luna inicial
-        # st.title('')
+        #     st.image('fotos/luna llena.png', caption= '100%')
+        # # with cent_co:
+        # #     luna_placeholder = st.image('fotos/luna_94%_buena.png', caption='94%')  # Imagen de la luna inicial
+        # # st.title('')
 
-        cara1, cara2 = st.columns(2)
+        # cara1, cara2 = st.columns(2)
 
-        with cara1:
-            st.image('fotos/foto granada.png', caption='granada')
-        with cara2:
-            st.image('fotos/qr bonito.png', caption='qr')
+        # with cara1:
+        #     st.image('fotos/foto granada.png', caption='granada')
+        # with cara2:
+        #     st.image('fotos/qr bonito.png', caption='qr')
         
         # with cara1:
         #     # Muestra la imagen difuminada
