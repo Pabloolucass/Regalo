@@ -43,7 +43,7 @@ toml==0.10.2
 tornado==6.5.1
 typing_extensions==4.13.2
 tzdata==2025.2
-urllib3==2.4.0
+urllib3==2.6.3
 watchdog==5.0.3
 wheel==0.45.1
 wrapt==1.17.2
